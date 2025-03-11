@@ -1,0 +1,212 @@
+<style>
+    .custum-file-upload {
+        height: 200px;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: space-between;
+        gap: 20px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed #cacaca;
+        background-color: rgba(255, 255, 255, 1);
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0px 48px 35px -48px rgba(0, 0, 0, 0.1);
+    }
+
+    .custum-file-upload .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .custum-file-upload .icon svg {
+        height: 80px;
+        fill: rgba(75, 85, 99, 1);
+    }
+
+    .custum-file-upload .text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .custum-file-upload .text span {
+        font-weight: 400;
+        color: rgba(75, 85, 99, 1);
+    }
+
+    .custum-file-upload input {
+        display: none;
+    }
+</style>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Edit {{room.roomname}} </h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                <li class="breadcrumb-item">Rooms</li>
+                <li class="breadcrumb-item active">Edit Room</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="card">
+                    <div class="card-body">
+                        {{!-- <h5 class="card-title">Multi Columns Form</h5> --}}
+
+                        <!-- Multi Columns Form -->
+                        <form class="row g-3 mt-3" action="/admin/edit-room/{{room._id}}" enctype="multipart/form-data"
+                            method="POST">
+
+                            <div class="col-md-12">
+                                <label for="inputName5" class="form-label">Select Category <span
+                                        class="text-danger">*</span></label>
+                                {{!-- <input type="text" class="form-control" name="roomname" id="inputName5"> --}}
+                                <select class="form-select" name="category" aria-label="Default select example"
+                                    required>
+                                    <option selected disabled>Select Category</option>
+                                    {{#each categories}}
+                                    <option value="{{this._id}}">{{this.name}}</option>
+                                    {{/each}}
+
+
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputName5" class="form-label">Room Name</label>
+                                <input type="text" class="form-control" name="roomname" value="{{room.roomname}}"
+                                    id="inputName5">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputName5" class="form-label">Room Number</label>
+                                <input type="text" class="form-control" name="roomnumber" value="{{room.roomnumber}}"
+                                    id="inputName5">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputName5" class="form-label">Est Cost <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" value="{{room.Price}}" class="form-control" name="Price"
+                                    id="estcost">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="inputName5" class="form-label">Advance Amount</label>
+                                <input type="text" class="form-control" value="{{room.AdvPrice}}" name="AdvPrice"
+                                    id="advcost" readonly>
+                            </div>
+
+                            <p>Estimate Time</p>
+                            <hr class="mt-0 mb-0">
+                            <div class="col-md-6">
+                                <label for="inputName5" class="form-label">From (Check in) <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" value="5:00 PM" class="form-control" name="in" id="inputName5"
+                                    readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputName5" class="form-label">To (Check out) <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" value="11:00 AM" class="form-control" name="out" id="inputName5"
+                                    readonly>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="inputPassword5" class="form-label">Room Emergency Number <span
+                                        class="text-danger">*</span></label>
+                                {{!-- <input type="number" name="ren" class="form-control" id="inputPassword5"> --}}
+
+                                <select class="form-select" name="ren" aria-label="Default select example" required>
+                                    <option selected>Select Number</option>
+                                    <option value="+91 9999 999 999">+91 9999 999 999</option>
+                                    <option value="+91 8888 999 111">+91 8888 999 111</option>
+                                    <option value="+91 3432 321 123">+91 3432 321 123</option>
+                                    <option value="+91 8987 444 222">+91 8987 444 222</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="inputEmail5" class="form-label">Description</label>
+                                <textarea type="text" class="form-control" name="desc"
+                                    id="inputEmail5">{{room.desc}}</textarea>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <label for="inputEmail5" class="form-label">List Facilities</label>
+                                <textarea type="text" class="form-control" name="fesilities"
+                                    id="inputEmail5">{{room.fesilities}}</textarea>
+                            </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-5">
+                <div class="card p-3">
+                    <div class="card-body">
+                        <label class="mb-3">Upload Photos</label>
+                        <input type="file" name="Image1" class="form-control mb-3" id="inputPassword5">
+
+                        <img src="/images/room-images/{{room._id}}-1.png" alt=""
+                            style="width: 6rem; margin-bottom: 8px;" id="imgView">
+
+                        <hr>
+
+                        <input type="file" name="Image2" class="form-control mb-3" id="inputPassword5">
+                        <img src="/images/room-images/{{room._id}}-2.png" alt=""
+                            style="width: 6rem; margin-bottom: 8px;" id="imgView">
+
+                        <hr>
+
+                        <input type="file" name="Image3" class="form-control mb-3" id="inputPassword5">
+                        <img src="/images/room-images/{{room._id}}-3.png" alt=""
+                            style="width: 6rem; margin-bottom: 8px;" id="imgView">
+
+                        <hr>
+
+                        <input type="file" name="Image4" class="form-control mb-3" id="inputPassword5">
+                        <img src="/images/room-images/{{room._id}}-4.png" alt=""
+                            style="width: 6rem; margin-bottom: 8px;" id="imgView">
+
+                        <hr>
+
+                        <input type="file" name="Image5" class="form-control mb-3" id="inputPassword5">
+                        <img src="/images/room-images/{{room._id}}-5.png" alt=""
+                            style="width: 6rem; margin-bottom: 8px;" id="imgView">
+
+                        <hr>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+    <div class="mb-4" style="float: inline-end;
+">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="/admin/rooms/all-rooms" class="btn btn-secondary">Cancel</a>
+    </div>
+    </form>
+
+
+</main><!-- End #main -->
+
+<script>
+    document.getElementById("estcost").addEventListener("input", function () {
+        let estCost = parseFloat(this.value) || 0; // Get the entered value and ensure it's a number
+        document.getElementById("advcost").value = Math.round(estCost * 0.5); // Set 50% of the value without decimals
+    });
+</script>
